@@ -1,1 +1,4 @@
 project/.env
+project/node_modules
+project/package-lock.json
+project/test_api
