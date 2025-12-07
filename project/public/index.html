@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>GloboTour DApp</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<h1>🌍 GloboTour – Travel Booking & Payments</h1>
+
+<button id="connectBtn">Connect Wallet</button>
+<p id="accountDisplay"></p>
+
+<hr>
+
+<!-- API Search -->
+<h2>🔎 Search Travel Services</h2>
+
+<div class="section">
+    <input id="cityInput" placeholder="Enter City Code (e.g., PAR)" />
+    <button id="hotelSearchBtn">Search Hotels</button>
+</div>
+
+<div id="hotelResults"></div>
+
+<hr>
+
+<!-- Blockchain Payments -->
+<h2>💳 Travel Wallet</h2>
+
+<div class="section">
+    <input id="depositAmount" placeholder="ETH Amount" />
+    <button id="depositBtn">Deposit</button>
+</div>
+
+<div class="section">
+    <input id="payAmount" placeholder="Amount in ETH" />
+    <input id="serviceDescription" placeholder="Service Description" />
+    <button id="payBtn">Make Payment</button>
+</div>
+
+<button id="balanceBtn">Check Balance</button>
+<p id="balanceDisplay"></p>
+
+<hr>
+
+<!-- Transaction Log -->
+<h2>📜 Transaction Log</h2>
+<div id="transactionLog"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/web3@1.10.0/dist/web3.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
