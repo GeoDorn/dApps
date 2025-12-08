@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Amadeus Hotel Search (Demo)</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <h1 class="brand">Hotel Finder</h1>
+      <nav class="meta">
+        <a href="#" id="view-bookings" aria-label="View bookings">My Bookings</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="search-card">
+      <form id="api-form" class="search-form">
+        <label for="city-code" class="label">City Code</label>
+        <input type="text" id="city-code" placeholder="e.g., PAR, LON, NYC" />
+        <button type="submit" id="search-button">Search Hotels</button>
+      </form>
+      <p id="helper" class="helper">Enter an IATA city code and press “Search Hotels”.</p>
+    </section>
+
+    <section id="results" class="grid"></section>
+  </main>
+
+  <!-- Booking Modal -->
+  <div id="modal" class="modal hidden" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="modal-backdrop"></div>
+    <div class="modal-content" role="document">
+      <button class="modal-close" id="close-modal" aria-label="Close">×</button>
+      <h2 id="modal-title">Book Hotel</h2>
+      <form id="booking-form" class="booking-form">
+        <div class="field">
+          <label>Hotel</label>
+          <input id="bk-hotel" type="text" readonly />
+        </div>
+        <div class="row">
+          <div class="field">
+            <label for="bk-checkin">Check-in</label>
+            <input id="bk-checkin" type="date" required/>
+          </div>
+          <div class="field">
+            <label for="bk-checkout">Check-out</label>
+            <input id="bk-checkout" type="date" required/>
+          </div>
+          <div class="field">
+            <label for="bk-guests">Guests</label>
+            <input id="bk-guests" type="number" min="1" value="1" required/>
+          </div>
+        </div>
+        <div class="row">
+          <div class="field">
+            <label for="bk-name">Full name</label>
+            <input id="bk-name" type="text" placeholder="John Smith" required/>
+          </div>
+          <div class="field">
+            <label for="bk-email">Email</label>
+            <input id="bk-email" type="email" placeholder="john@example.com" required/>
+          </div>
+        </div>
+        <div class="price-line">
+          <span>Estimated price:</span>
+          <strong id="bk-price">—</strong>
+        </div>
+        <div class="actions">
+          <button type="button" class="ghost" id="cancel-booking">Cancel</button>
+          <button type="submit" class="primary">Confirm Booking</button>
+        </div>
+      </form>
+
+      <div id="confirmation" class="confirmation hidden">
+        <h3>Booking Confirmed</h3>
+        <p><strong id="c-code"></strong></p>
+        <p id="c-summary"></p>
+        <div class="actions">
+          <button class="primary" id="close-confirmation">Done</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
