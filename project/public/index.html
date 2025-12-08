@@ -7,12 +7,37 @@
   <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
-  <main>
-    <h1>Where do you want to go?</h1>
-    <form id="destination-form">
-      <input type="text" id="destination" name="destination" placeholder="Enter city or airport code" required>
-      <button type="submit">Search</button>
-    </form>
-  </main>
-</body>
-</html>
+ <main>
+    <section id="search-section">
+      <h2>Where do you want to go?</h2>
+      
+      <form id="travel-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="origin">From</label>
+            <input type="text" id="origin" placeholder="e.g., London (LON)" required>
+            <div id="origin-suggestions" class="suggestions"></div>
+          </div>
+          
+          <div class="form-group">
+            <label for="destination">To</label>
+            <input type="text" id="destination" placeholder="e.g., Paris (PAR)" required>
+            <div id="destination-suggestions" class="suggestions"></div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="departure-date">Departure Date</label>
+            <input type="date" id="departure-date" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="adults">Travelers</label
+            <input type="number" id="adults" min="1" value="1" required>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-primary">Search Flights & Hotels</button>
+      </form>
+    </section>
