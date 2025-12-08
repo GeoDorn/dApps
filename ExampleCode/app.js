@@ -29,8 +29,8 @@ function toast(msg) {
 
 // ---- Fetch hotels ----
 async function fetchHotelsByCityCode(cityCode) {
-  const helper = qs('#helper');
-  helper.textContent = "Searching hotels…";
+  const helper = qs('#destination');
+  helper.textContent = "Jetting off!";
   try {
     const resp = await fetch(`/api/hotels?cityCode=${encodeURIComponent(cityCode)}`);
     const data = await resp.json();
