@@ -23,19 +23,44 @@ h1 {
   font-size: 2.5rem;
 }
 
-form {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
+h2 {
+  margin-bottom: 20px;
+  font-size: 2.5rem;
 }
 
-input[type="text"] {
-  width: 400px;        
-  padding: 15px;       
-  font-size: 1.2rem;   
-  border: none;
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  width: 320px;                
+  margin: auto;              
+  padding: 10px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;      /* label on top, input under it */
+  text-align: left;            /* aligns labels to left */
+}
+
+label {
+    margin-top:20px;
+  margin-bottom: 5px;
+  font-size: 20px;
+  color: #e0e0e0;
+}
+
+input[type="text"],
+input[type="date"],
+input[type="number"],
+select {
+  padding: 12px;
+  border: 2px solid #ff0000;
   border-radius: 8px;
-  outline: none;
+  font-size: 1rem;
+  background: #fff;
+  color: #000;
+  
 }
 
 button {
@@ -47,6 +72,7 @@ button {
   color: #fff;
   cursor: pointer;
   transition: background 0.3s ease;
+  margin-top: 20px;
 }
 
 button:hover {
