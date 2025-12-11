@@ -4,46 +4,58 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Globotour</title>
-  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
- <main>
-   <section id="search-section">
-      <h2>Where to?</h2>
-      
-      <form id="travel-form">
-          <div class="form-group">
-            <label for="origin">From</label>
-            <input type="text" id="origin" placeholder="e.g., London (LON)" required>
-            <div id="origin-suggestions" class="suggestions"></div>
-          </div>
-          
-          <div class="form-group">
-            <label for="destination">To</label>
-            <input type="text" id="destination" placeholder="e.g., Paris (PAR)" required>
-            <div id="destination-suggestions" class="suggestions"></div>
-          </div>
-
-          <div class="form-group">
-            <label for="departure-date">Departure Date</label>
-            <input type="date" id="departure-date" required>
-          </div>
-
-          <div class="form-group">
-            <label for="return-date">Return Date</label>
-            <input type="date" id="return-date">
-          </div>
-          
-          <div class="form-group">
-            <label for="travelers">Travelers</label>
-            <input type="number" id="travelers" min="1" value="1">
-          </div>
+  <div class="container">
+    <h1>Globotour Travel</h1>
+    <formgroup>
+    <form id="searchForm">
+      <label for="originLocationCode">Departing:</label>
+      <input 
+        type="text" 
+        id="originLocationCode" 
+        placeholder="e.g. BHD"
+        maxlength="3"
+      >
+      <label for="destinationLocationCode">Arriving</label>
+      <input 
+        type="text" 
+        id="destinationLocationCode" 
+        placeholder="e.g.  LON"
+        maxlength="3"
+        >
+      <label for="departureDateInput">Departing on</label>
+      <input 
+        type="date" 
+        id="departureDateInput"
+        >
+      <label>
+        <input type="checkbox" id="returnFlightCheckbox">
+        Return flight?
+      </label>
+        
+        <div id="returnDateWrapper" style="display: none;">
+          <label for="returnDateInput">Returning on</label>
+          <input 
+            type="date" 
+            id="returnDateInput"
+          >
         </div>
-      </form>
-        <button type="submit" class="btn-primary">Search Flights & Hotels</button>
-    </section>
-    
-  </main> 
+        <label for="adultsInput">Flyers:</label>
+        <input 
+          type="number" 
+          id="adultsInput" 
+          min="1" 
+          max="9" 
+          value="1"
+        >
+      </formgroup>
+      <button type="submit">Search Flights</button>
+    </form>
+    <div id="loading" style="display: none;">Loading...</div>
+    <div id="results"></div>
+  </div>
   <script src="app.js"></script>
-    </body>
+</body>
 </html>
