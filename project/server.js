@@ -1,8 +1,7 @@
-import express from "express";
-import cors from "cors";
+import express from 'express';
+import cors from 'cors';
 import dotenv from "dotenv";
 import fetch from "node-fetch";
-import Amadeus from "amadeus";
 
 dotenv.config();
 
@@ -11,77 +10,62 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static("public"));
 
-// Initialize Amadeus SDK
-const amadeus = new Amadeus({
-  clientId: process.env.AMADEUS_CLIENT_ID,
-  clientSecret: process.env.AMADEUS_CLIENT_SECRET,
-  hostname: 'test'
-});
 
-app.post("/api/flights", async (req, res) => {
+
+const AMADEUS_TOKEN_URL  = "https://test.api.amadeus.com/v1/security/oauth2/token";
+
+async function getServerAccessToken() {
   try {
-    const { origin, destination, departureDate, returnDate, adults } = req.body;
-    
-    if (!origin || !destination || !departureDate || !adults) {
-      return res.status(400).json({ error: "Missing required parameters" });
-    }
-    const response = await amadeus.shopping.flightOffers.search.get({
-      originLocationCode: origin,
-      destinationLocationCode: destination,
-      departureDate: departureDate,
-      returnDate: returnDate,
-      adults: adults,
-      max: 10
-    });
-
-    res.json(response);
-  } catch (err) {
-    res.status(500).json({ error: "Search Error", detail: String(err.message || err) });
-  }
-});
-
-app.post("/api/hotels", async (req, res) => {
-  try {
-    const { cityCode } = req.body;
-    
-    // First get hotel IDs in the city
-    const hotelIds = await amadeus.referenceData.locations.hotels.byCity.get({
-      cityCode: cityCode
-    });
-    
-    if (hotelIds.data && hotelIds.data.length > 0) {
-      // Get offers for the first few hotels
-      const hotelIdList = hotelIds.data.slice(0, 10).map(h => h.hotelId).join(',');
-      
-      const offers = await amadeus.shopping.hotelOffersSearch.get({
-        hotelIds: hotelIdList
+    console.log('Fetching new access token...');
+    const response = await fetch(AMADEUS_TOKEN_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({
+          client_id:     process.env.AMADEUS_CLIENT_ID,
+          client_secret: process.env.AMADEUS_CLIENT_SECRET,
+          grant_type:    "client_credentials"
+        })
       });
-      
-      res.json(offers.data);
+    const data = await resp.json();
+
+    if (response.ok) {
+      console.log('Access token fetched successfully');
+      return data.access_token;
     } else {
-      res.json([]);
-    }
-  } catch (error) {
-    console.error('Hotel search error:', error);
-    res.status(500).json({ error: error.message });
-  }
-});
+      throw new Error(`Failed to fetch access token: ${data.error_description}`);
+    }   
+    } catch (error) {
+        console.error('Error fetching access token:', error);
+      }
+}
 
-app.get("/api/locations", async (req, res) => {
-  try {
-    const { keyword } = req.query;
-    
-    const response = await amadeus.referenceData.locations.get({
-      keyword: keyword,
-      subType: 'CITY,AIRPORT'
+async function fetchHotelData(cityCode) {
+  const accessToken = await getServerAccessToken();
+
+  if (!accessToken) {
+    throw new Error('No access token available');
+  return;
+}
+
+try {
+    const response = await fetch(`https://test.api.amadeus.com/v2/locations/hotels/by-city?cityCode=${cityCode}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`
+      }
     });
-    
-    res.json(response.data);
-  } catch (error) {
-    console.error('Location search error:', error);
-    res.status(500).json({ error: error.message });
-  }
-});
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Server running: http://localhost:${PORT}`));
+    const hotelData = await response.json();
+    
+    if (response.ok) {
+      displayResults(data);
+    } else {
+      throw new Error(`Failed to fetch hotel data: ${hotelData.error}`);
+    }
+  }catch (error) {
+      console.error('Error fetching hotel data:', error);
+  }
+}
+
+app.listen(3000, () => {
+  console.log('Server is running on http://localhost:3000');
+});

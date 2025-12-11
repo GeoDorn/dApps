@@ -1,7 +1,7 @@
 # dApps
 DApps Coursework
 
-user npm start to start the server from the project folder
+user npm run devStart to start the server from the project folder
 
 https://github.com/amadeus4dev/amadeus-code-examples?tab=readme-ov-file
 
